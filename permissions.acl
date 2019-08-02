@@ -1,0 +1,63 @@
+/**
+ * New access control file
+ */
+
+rule growerTempReading {
+	description: "Grower cannot submit temp readings"
+	participant: "org.acme.shipping.perishable.Grower"
+  	operation: ALL
+    resource: "org.acme.shipping.perishable.TemperatureReading"
+  	action: DENY
+}
+
+rule CanDelete {
+  description: "Billy can delete contracts that he is a part of"
+  	participant(m): "org.acme.shipping.perishable.Grower#billy@gmail.com"
+  	operation: DELETE
+    resource(v): "org.acme.shipping.perishable.Contract"
+  	condition: (v.grower.getIdentifier() == m.getIdentifier())
+  	action: ALLOW
+}
+
+rule CannotDelete {
+ 	description: "Billy cannot delete any asset"
+  	participant: "org.acme.shipping.perishable.Grower#billy@gmail.com"
+  	operation: DELETE
+    resource: "org.hyperledger.composer.system.Asset"
+  	action: DENY
+}
+
+ rule Default {
+     description: "Allow all participants access to all resources"
+     participant: "org.hyperledger.composer.system.Participant"
+     operation: ALL
+     resource: "org.acme.shipping.perishable.*"
+     action: ALLOW
+ }
+
+ rule SystemACL {
+ 	description: "All access - grant everything to everybody"
+   	participant: "org.hyperledger.composer.system.Participant"
+   	operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+  	action: ALLOW
+ }
+
+
+
+rule NetworkAdminUser {
+ 	description: "Grant Business network administrator full access to USER resources"
+  	participant: "org.hyperledger.composer.system.NetworkAdmin"
+  	operation: ALL
+    resource: "**"
+  	action: ALLOW
+}
+
+rule NetworkAdminSystem {
+  	description: "Grant Business network administrator full access to SYSTEM resources"
+  	participant: "org.hyperledger.composer.system.NetworkAdmin"
+  	operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+  	action: ALLOW
+}
+

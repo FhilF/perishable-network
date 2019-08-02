@@ -1,0 +1,41 @@
+{
+  "engines": {
+    "composer": "^0.20.8"
+  },
+  "name": "perishable-network",
+  "version": "0.0.3",
+  "description": "A perishable tracking network",
+  "scripts": {
+    "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/perishable-network.bna",
+    "pretest": "npm run lint",
+    "lint": "eslint ...; exit 0",
+    "test": "nyc mocha -t 0 test/*.js && cucumber-js"
+  },
+  "keywords": [
+    "composer",
+    "composer-network"
+  ],
+  "author": "fhilip",
+  "email": "fhilip@gmail.com",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "latest",
+    "chai-as-promised": "latest",
+    "composer-admin": "^0.20.8",
+    "composer-cli": "^0.20.8",
+    "composer-client": "^0.20.8",
+    "composer-common": "^0.20.8",
+    "composer-connector-embedded": "^0.20.8",
+    "composer-cucumber-steps": "^0.20.8",
+    "cucumber": "^2.2.0",
+    "eslint": "latest",
+    "mkdirp": "latest",
+    "mocha": "latest",
+    "nyc": "latest",
+    "sinon": "latest"
+  },
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1"
+  }
+}
